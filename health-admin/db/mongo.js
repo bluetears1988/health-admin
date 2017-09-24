@@ -24,6 +24,7 @@ class Mongo{
 			}
 		}
 
+		mongoose.Promise = global.Promise
 		mongoose
 			.connect(this.dblink, opts)
 			.connection

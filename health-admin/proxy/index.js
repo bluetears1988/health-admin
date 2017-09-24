@@ -9,7 +9,10 @@ import help from '../models/help'
 import user from './user'
 import upload from './upload'
 
+import card from '../models/12/card'
+
 export default {
+	card    : new RestBase(card), 
 	banner  : new RestBase(banner), 
 	classify: new RestBase(classify), 
 	goods   : new RestBase(goods), 

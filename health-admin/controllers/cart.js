@@ -4,7 +4,7 @@ class Ctrl{
 	constructor(app) {
 		Object.assign(this, {
 			app, 
-			model: proxy.cart, 
+			model: proxy.card, 
 		})
 
 		this.init()
@@ -26,7 +26,7 @@ class Ctrl{
 		this.app.post('/api/cart', this.post.bind(this))
 		this.app.put('/api/cart/:id', this.put.bind(this))
 		this.app.delete('/api/cart/:id', this.delete.bind(this))
-		this.app.post('/api/cart/clear', this.clear.bind(this))
+		// this.app.post('/api/cart/clear', this.clear.bind(this))
 	}
 
 	/**
@@ -197,40 +197,53 @@ class Ctrl{
 	 *     }
 	 */
 	post(req, res, next) {
-		const query = {
-			goods : req.body.goods, 
-			user : req.user._id, 
-		}
+		// debugger;
+		// var t = req.pkgname;
+		// console.trace("error:", req.body);
 
 		const body = {
-			goods : req.body.goods, 
-			total: Number(req.body.total) || 1, 
-			user : req.user._id, 
+			name  : req.body.pkgname, 
 		}
 
-		const p1 = proxy.goods.findByIdAsync(query.goods)
-		const p2 = this.model.findOneAsync(query)
-
-		Promise.all([p1, p2])
-		.then(doc => {
-			const goods = doc[0]
-			const cart  = doc[1]
-
-			if (!goods) return res.tools.setJson(1, '资源不存在或已删除')
-
-			if (!cart) {
-				body.amount = goods.price
-				body.totalAmount = goods.price * body.total
-				return this.model.post(body)
-			}
-
-			cart.total = cart.total + body.total
-			cart.amount = goods.price
-			cart.totalAmount = goods.price * cart.total
-			return cart.save()
-		})
+		this.model.post(body)
 		.then(doc => res.tools.setJson(0, '新增成功', {_id: doc._id}))
 		.catch(err => next(err))
+		// res.send("ok");
+		// res.tools.setJson(1, '资源不存在或已删除')
+		// const query = {
+		// 	goods : req.body.goods, 
+		// 	user : req.user._id, 
+		// }
+
+		// const body = {
+		// 	goods : req.body.goods, 
+		// 	total: Number(req.body.total) || 1, 
+		// 	user : req.user._id, 
+		// }
+
+		// const p1 = proxy.goods.findByIdAsync(query.goods)
+		// const p2 = this.model.findOneAsync(query)
+
+		// Promise.all([p1, p2])
+		// .then(doc => {
+		// 	const goods = doc[0]
+		// 	const cart  = doc[1]
+
+		// 	if (!goods) return res.tools.setJson(1, '资源不存在或已删除')
+
+		// 	if (!cart) {
+		// 		body.amount = goods.price
+		// 		body.totalAmount = goods.price * body.total
+		// 		return this.model.post(body)
+		// 	}
+
+		// 	cart.total = cart.total + body.total
+		// 	cart.amount = goods.price
+		// 	cart.totalAmount = goods.price * cart.total
+		// 	return cart.save()
+		// })
+		// .then(doc => res.tools.setJson(0, '新增成功', {_id: doc._id}))
+		// .catch(err => next(err))
 	}
 
 	/**
