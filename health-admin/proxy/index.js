@@ -10,9 +10,13 @@ import user from './user'
 import upload from './upload'
 
 import card from '../models/12/card'
+import city from '../models/12/city'
+import project from '../models/12/project'
 
 export default {
 	card    : new RestBase(card), 
+	city    : new RestBase(city), 
+	project : new RestBase(project), 
 	banner  : new RestBase(banner), 
 	classify: new RestBase(classify), 
 	goods   : new RestBase(goods), 

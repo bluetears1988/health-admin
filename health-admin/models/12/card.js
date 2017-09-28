@@ -3,25 +3,42 @@ import mongoose from 'mongoose'
 const ObjectId = mongoose.Schema.Types.ObjectId
 
 const Schema = mongoose.Schema({
-	id: Number,
+	// id: Number,
 	name: String,
-	cityID:Array,
+	// cityID:Array,
 	bprice: String,
-	zprice: String,
+	price: String,
 	gender: Number,
-	peopleID: Number,
-	feature: Array,
-	checkNum: Number,
-	checkUp:Array,
+	people: String,
+	feature: [{
+		name:String,
+		img:String
+	}],
+	projectNum: Number,
+	project:[{
+		name:String,
+	}],
 	institutionNum: Number,
+	// institutions: [{
+	// 	type: ObjectId, 
+	// 	ref : 'institution',
+	// }],
 	institutions: [{
-		type: ObjectId, 
-		ref : 'institution',
+		id: Number,
+		name: String,
+		img: String,
+		real_price: String,
+		Longitude:String,
+		Latitude:String,
 	}],
 	images: Array,
 	sales: Number,
 	count: Number,
 	collectNum: Number,
+	related_cities:[{
+		name:String,
+		code:String,
+	}]
 	// price: String,
 	// code: String,
 	// location: [{

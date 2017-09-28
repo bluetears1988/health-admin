@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 const ObjectId = mongoose.Schema.Types.ObjectId
 
 const Schema = mongoose.Schema({
-	id: Number,
+	// id: Number,
 	name: String,
 	grade: Number,
 	pkgNum: Number,

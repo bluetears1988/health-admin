@@ -3,16 +3,23 @@ import mongoose from 'mongoose'
 const ObjectId = mongoose.Schema.Types.ObjectId
 
 const Schema = mongoose.Schema({
-	id: Number,
+	// id: Number,
 	name: String,
-	cityId: Number,
+	related_cities:[{
+		name: String,
+		Code: String,
+	}],
 	type:Number,
 	address: String,
 	telephone:Number,
 	bprice:String,
 	img:String,
 	score: String,
-	distance: String,
+	location:{
+		Longitude:String,
+		Latitude:String,
+	},
+	// distance: String,
 	img:String,
 	introduce:String,
 	pkgnum:Number,
@@ -20,16 +27,20 @@ const Schema = mongoose.Schema({
 		id: Number,
 		name: String,
 		img: String,
-		zprice: String,
-		price: String
+		price: String,
+		real_price: String,
 	}],
 	msgnum:Number,
-	msgs:[{
-		account: String, 
-		score:String,
-		comment:String,
-		date:String
-	}]
+	msgs: [{
+		type: ObjectId, 
+		ref : 'comment',
+	}],
+	// msgs:[{
+	// 	account: String, 
+	// 	score:String,
+	// 	comment:String,
+	// 	date:String
+	// }]
 })
 
 export default mongoose.model('institution', Schema)
