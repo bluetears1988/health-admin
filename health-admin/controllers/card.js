@@ -84,7 +84,7 @@ class Ctrl{
 	 */
 	getAll(req, res, next) {
 		const query = {
-			user: req.user._id
+			// user: req.user._id
 		}
 
 		const params = {
@@ -94,7 +94,7 @@ class Ctrl{
 		}
 
 		const options = {
-			path    : 'goods', 
+			path    : 'cards', 
 			select  : {}, 
 		}
 

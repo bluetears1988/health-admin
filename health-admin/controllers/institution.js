@@ -4,7 +4,7 @@ class Ctrl{
 	constructor(app) {
 		Object.assign(this, {
 			app, 
-			model: proxy.project, 
+			model: proxy.institution, 
 		})
 
 		this.init()
@@ -21,11 +21,11 @@ class Ctrl{
 	 * 注册路由
 	 */
 	routes() {
-		this.app.get('/api/project', this.getAll.bind(this))
-		// this.app.get('/api/card/:id', this.get.bind(this))
-		this.app.post('/api/project', this.post.bind(this))
-		this.app.put('/api/project/:id', this.put.bind(this))
-		this.app.delete('/api/card/:id', this.delete.bind(this))
+		this.app.get('/api/institution', this.getAll.bind(this))
+		// this.app.get('/api/feature/:id', this.get.bind(this))
+		this.app.post('/api/institution', this.post.bind(this))
+		this.app.put('/api/institution/:id', this.put.bind(this))
+		this.app.delete('/api/institution/:id', this.delete.bind(this))
 		// this.app.post('/api/cart/clear', this.clear.bind(this))
 	}
 
@@ -92,7 +92,7 @@ class Ctrl{
 		}
 
 		const options = {
-			path    : 'projects', 
+			path    : 'institutions', 
 			select  : {}, 
 		}
 
@@ -201,8 +201,12 @@ class Ctrl{
 
 		const body = {
 			name  : req.body.name, 
-			content  : req.body.content, 
-			aim  : req.body.aim, 
+			introduce  : req.body.introduce,
+			type  : req.body.type,
+			address  : req.body.address,
+			telephone  : req.body.telephone,
+			bprice  : req.body.bprice,
+			related_cities  : req.body.city,
 		}
 
 		this.model.post(body)

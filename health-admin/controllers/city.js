@@ -201,7 +201,9 @@ class Ctrl{
 
 		const body = {
 			name  : req.body.name, 
-			id  : req.body.id, 
+			grade  : req.body.grade, 
+			code  : req.body.code, 
+			pcode  : req.body.pcode, 
 		}
 
 		this.model.post(body)

@@ -21,13 +21,13 @@ class Mongo{
 				socketOptions: { 
 					keepAlive: 110 
 				}
-			}
+			},
+			// useMongoClient: true
 		}
 
 		mongoose.Promise = global.Promise
-		mongoose
-			.connect(this.dblink, opts)
-			.connection
+		mongoose.connect(this.dblink, opts)
+		.connection
 			.on('error', err => console.log('------ Mongodb connection failed ------' + err))
 			.on('open', () => console.log('------ Mongodb connection succeed ------'))
 

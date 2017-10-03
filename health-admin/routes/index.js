@@ -8,9 +8,10 @@ import address from '../controllers/address'
 import order from '../controllers/order'
 import help from '../controllers/help'
 import user from '../controllers/user'
-import user from '../controllers/city'
+import city from '../controllers/city'
 import project from '../controllers/project'
 import feature from '../controllers/feature'
+import institution from '../controllers/institution'
 
 export default function(app) {
 	new common(app)
@@ -26,4 +27,5 @@ export default function(app) {
 	new city(app)
 	new project(app)
 	new feature(app)
+	new institution(app)
 }

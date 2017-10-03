@@ -12,11 +12,15 @@ import upload from './upload'
 import card from '../models/12/card'
 import city from '../models/12/city'
 import project from '../models/12/project'
+import feature from '../models/12/feature'
+import institution from '../models/12/institution'
 
 export default {
 	card    : new RestBase(card), 
 	city    : new RestBase(city), 
 	project : new RestBase(project), 
+	feature : new RestBase(feature), 
+	institution : new RestBase(institution), 
 	banner  : new RestBase(banner), 
 	classify: new RestBase(classify), 
 	goods   : new RestBase(goods), 

@@ -5,10 +5,11 @@ const ObjectId = mongoose.Schema.Types.ObjectId
 const Schema = mongoose.Schema({
 	// id: Number,
 	name: String,
-	related_cities:[{
-		name: String,
-		Code: String,
-	}],
+	// related_cities:[{
+	// 	name: String,
+	// 	Code: String,
+	// }],
+	related_cities: String,
 	type:Number,
 	address: String,
 	telephone:Number,
@@ -20,7 +21,6 @@ const Schema = mongoose.Schema({
 		Latitude:String,
 	},
 	// distance: String,
-	img:String,
 	introduce:String,
 	pkgnum:Number,
 	cards: [{

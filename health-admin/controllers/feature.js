@@ -92,7 +92,7 @@ class Ctrl{
 		}
 
 		const options = {
-			path    : 'cities', 
+			path    : 'features', 
 			select  : {}, 
 		}
 
@@ -201,7 +201,7 @@ class Ctrl{
 
 		const body = {
 			name  : req.body.name, 
-			id  : req.body.id, 
+			details  : req.body.details, 
 		}
 
 		this.model.post(body)
