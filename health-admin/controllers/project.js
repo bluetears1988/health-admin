@@ -337,7 +337,6 @@ class Ctrl{
 	delete(req, res, next) {
 		const query = {
 			_id : req.params.id, 
-			user: req.user._id, 
 		}
 		
 		this.model.delete(query)

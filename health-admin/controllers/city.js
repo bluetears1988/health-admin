@@ -83,7 +83,13 @@ class Ctrl{
 	 *     }
 	 */
 	getAll(req, res, next) {
-		const query = {}
+		let query = {}
+
+		if(Object.keys(req.query).length > 0){
+			for(let key in req.query){
+				query[key] = req.query[key]
+			}
+		}
 
 		const params = {
 			query  : query, 

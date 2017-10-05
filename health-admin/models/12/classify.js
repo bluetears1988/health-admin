@@ -5,7 +5,8 @@ const ObjectId = mongoose.Schema.Types.ObjectId
 const Schema = mongoose.Schema({
 	// id: Number,
 	name: String,
-	grade: Number,
+	city: String,
+	// grade: Number,
 	pkgNum: Number,
 	pkgs:[[{
 		type: ObjectId, 

@@ -73,25 +73,48 @@ class Ctrl{
 	 *     }
 	 */	
 	getAll(req, res, next) {
-		const query = {}
+		// const query = {}
 
-		const fields = {}
+		// const fields = {}
 
-		const options = {
-			page : req.query.page, 
-			limit: req.query.limit, 
+		// const options = {
+		// 	page : req.query.page, 
+		// 	limit: req.query.limit, 
+		// }
+
+		// Promise.all([
+		// 	this.model.countAsync(query), 
+		// 	this.model.getAll(query, fields, options), 
+		// ])
+		// .then(docs => {
+		// 	res.tools.setJson(0, '调用成功', {
+		// 		items   : docs[1], 
+		// 		paginate: res.paginate(Number(options.page), Number(options.limit), docs[0]), 
+		// 	})
+		// })
+		// .catch(err => next(err))
+
+		let query = {}
+
+		if(Object.keys(req.query).length > 0){
+			for(let key in req.query){
+				query[key] = req.query[key]
+			}
 		}
 
-		Promise.all([
-			this.model.countAsync(query), 
-			this.model.getAll(query, fields, options), 
-		])
-		.then(docs => {
-			res.tools.setJson(0, '调用成功', {
-				items   : docs[1], 
-				paginate: res.paginate(Number(options.page), Number(options.limit), docs[0]), 
-			})
-		})
+		const params = {
+			query  : query, 
+			fields : {}, 
+			options: {}, 
+		}
+
+		const options = {
+			path    : 'classify', 
+			select  : {}, 
+		}
+
+		this.model.findAndPopulateAsync(params, options)
+		.then(docs => res.tools.setJson(0, '调用成功', docs))
 		.catch(err => next(err))
 	}
 	
@@ -169,8 +192,9 @@ class Ctrl{
 	 */
 	post(req, res, next) {
 		const body = {
-			name  : req.body.name, 
-			remark: req.body.remark, 
+			name  : req.body.name,
+			pkgNum: req.body.pkgNum, 
+			city: req.body.city, 
 		}
 
 		this.model.post(body)
@@ -216,8 +240,9 @@ class Ctrl{
 		}
 
 		const body = {
-			name  : req.body.name, 
-			remark: req.body.remark, 
+			name  : req.body.name,
+			pkgNum: req.body.pkgNum, 
+			city: req.body.city, 
 		}
 
 		this.model.put(query, body)

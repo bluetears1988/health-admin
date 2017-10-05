@@ -83,10 +83,16 @@ class Ctrl{
 	 *     }
 	 */
 	getAll(req, res, next) {
-		const query = {
-			// user: req.user._id
-		}
+		let query = {}
 
+		if(Object.keys(req.query).length > 0){
+			for(let key in req.query){
+				query[key] = req.query[key]
+			}
+		}
+		// const query = {
+		// 	// city: req.query.city
+		// }
 		const params = {
 			query  : query, 
 			fields : {}, 
@@ -144,7 +150,7 @@ class Ctrl{
 	get(req, res, next) {
 		const query = {
 			_id : req.params.id, 
-			user: req.user._id, 
+			// city: req.params.city,
 		}
 
 		const params = {
@@ -202,7 +208,17 @@ class Ctrl{
 		// console.trace("error:", req.body);
 
 		const body = {
-			name  : req.body.pkgname, 
+			name  : req.body.name,
+			city  : req.body.city, 
+			people  : req.body.people,
+			gender  : req.body.gender,
+			bprice  : req.body.bprice,
+			price  : req.body.price,
+			projectNum  : req.body.projectNum,
+			institutionNum  : req.body.institutionNum,
+			feature  : req.body.feature,
+			project  : req.body.project,
+			institutions  : req.body.institutions,  
 		}
 
 		this.model.post(body)
@@ -292,18 +308,38 @@ class Ctrl{
 	put(req, res, next) {
 		const query = {
 			_id : req.params.id, 
-			user: req.user._id, 
 		}
 
 		const body = {
-			total: req.body.total, 
+			name  : req.body.name,
+			city  : req.body.city, 
+			people  : req.body.people,
+			gender  : req.body.gender,
+			bprice  : req.body.bprice,
+			price  : req.body.price,
+			projectNum  : req.body.projectNum,
+			institutionNum  : req.body.institutionNum,
+			feature  : req.body.feature,
+			project  : req.body.project,
+			institutions  : req.body.institutions,  
 		}
 
 		this.model.findOneAsync(query)
 		.then(doc => {
 			if (!doc) return res.tools.setJson(1, '资源不存在或已删除')
-			doc.total = Math.abs(body.total)
-			doc.totalAmount = Math.abs(doc.amount * doc.total)
+			// doc.total = Math.abs(body.total)
+			// doc.totalAmount = Math.abs(doc.amount * doc.total)
+			doc.name = body.name,
+			doc.city = body.city, 
+			doc.people = body.people,
+			doc.gender = body.gender,
+			doc.bprice = body.bprice,
+			doc.price = body.price,
+			doc.projectNum = body.projectNum,
+			doc.institutionNum = body.institutionNum,
+			doc.feature = body.feature,
+			doc.project = body.project,
+			doc.institutions = body.institutions;
 			return doc.save()
 		})
 		.then(doc => res.tools.setJson(0, '更新成功', doc))
@@ -337,7 +373,6 @@ class Ctrl{
 	delete(req, res, next) {
 		const query = {
 			_id : req.params.id, 
-			user: req.user._id, 
 		}
 		
 		this.model.delete(query)
