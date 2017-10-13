@@ -17,7 +17,7 @@ import config from './config'
 import mkdirs from './common/mkdirs'
 import logger from './common/logger'
 import tools from './middlewares/tools'
-import jwtauth from './middlewares/jwtauth'
+// import jwtauth from './middlewares/jwtauth'
 import routes from './routes'
 
 const app          = express()
@@ -25,7 +25,7 @@ const mkdirsSync   = mkdirs.mkdirsSync
 const SessionStore = sessionMongoose(connect)
 const mongodb      = new mongo(app, config)
 const store        = new SessionStore({ url: mongodb.dblink })
-const auth         = new jwtauth()
+// const auth         = new jwtauth()
 // const https = require('https');
 
 // 判断文件夹是否存在, 若不存在则创建之
@@ -123,6 +123,6 @@ app.use((err, req, res, next) => {
 	})
 })
 
-app.listen(3000, '0.0.0.0')
+// app.listen(3001, '0.0.0.0')
 
 export default app
