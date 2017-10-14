@@ -8,6 +8,7 @@ import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import session from 'express-session'
 import cors from 'cors'
+import qn from 'qn'
 import connect from 'connect'
 import jwt from 'express-jwt'
 import sessionMongoose from 'session-mongoose'
@@ -31,6 +32,17 @@ const store        = new SessionStore({ url: mongodb.dblink })
 // 判断文件夹是否存在, 若不存在则创建之
 mkdirsSync(config.upload.tmp)
 mkdirsSync(config.upload.path)
+
+var accessKey = 'OGP8PkJuWP4tLEKTuhKIJqv9VjOqVVjaH8WfHUnv';
+var secretKey = 'fO5CQKrwYSf5Peeet-OcAlR0NwlT6GxQEVcWHw00';
+var mac = new qn.auth.digest.Mac(accessKey, secretKey);
+var options = {
+  scope: afamilyhealth2018,
+  expires: 360000000
+};
+var putPolicy = new qiniu.rs.PutPolicy(options);
+var uploadToken=putPolicy.uploadToken(mac);
+console.dirxml(uploadToken);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views') )

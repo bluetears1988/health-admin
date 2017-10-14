@@ -22,7 +22,7 @@ class Ctrl{
 	 */
 	routes() {
 		this.app.get('/api/cities', this.getAll.bind(this))
-		this.app.get('/api/cities/:id', this.get.bind(this))
+		// this.app.get('/api/cities/:id', this.get.bind(this))
 		this.app.post('/api/cities', this.post.bind(this))
 		this.app.put('/api/cities/:id', this.put.bind(this))
 		this.app.delete('/api/cities/:id', this.delete.bind(this))
@@ -145,30 +145,30 @@ class Ctrl{
 	 *       }
 	 *     }
 	 */
-	get(req, res, next) {
-		const query = {
-			_id : req.params.id, 
-			user: req.user._id, 
-		}
+	// get(req, res, next) {
+	// 	const query = {
+	// 		_id : req.params.id, 
+	// 		// user: req.user._id, 
+	// 	}
 
-		const params = {
-			query  : query, 
-			fields : {}, 
-			options: {}, 
-		}
+	// 	const params = {
+	// 		query  : query, 
+	// 		fields : {}, 
+	// 		options: {}, 
+	// 	}
 
-		const options = {
-			path    : 'goods', 
-			select  : {}, 
-		}
+	// 	const options = {
+	// 		path    : 'cities', 
+	// 		select  : {}, 
+	// 	}
 
-		this.model.findOneAndPopulateAsync(params, options)
-		.then(doc => {
-			if (!doc) return res.tools.setJson(1, '资源不存在或已删除')
-			return res.tools.setJson(0, '调用成功', doc)
-		})
-		.catch(err => next(err))
-	}
+	// 	this.model.findOneAndPopulateAsync(params, options)
+	// 	.then(doc => {
+	// 		if (!doc) return res.tools.setJson(1, '资源不存在或已删除')
+	// 		return res.tools.setJson(0, '调用成功', doc)
+	// 	})
+	// 	.catch(err => next(err))
+	// }
 
 	/**
 	 * @api {post} /cart 新建一个资源
@@ -299,18 +299,22 @@ class Ctrl{
 	put(req, res, next) {
 		const query = {
 			_id : req.params.id, 
-			user: req.user._id, 
 		}
 
 		const body = {
-			total: req.body.total, 
+			name  : req.body.name,
+			code  : req.body.code, 
+			grade  : req.body.grade,
+			pcode  : req.body.pcode, 
 		}
 
 		this.model.findOneAsync(query)
 		.then(doc => {
 			if (!doc) return res.tools.setJson(1, '资源不存在或已删除')
-			doc.total = Math.abs(body.total)
-			doc.totalAmount = Math.abs(doc.amount * doc.total)
+			doc.name = body.name,
+			doc.code = body.code, 
+			doc.grade = body.grade,
+			doc.pcode = body.pcode;
 			return doc.save()
 		})
 		.then(doc => res.tools.setJson(0, '更新成功', doc))

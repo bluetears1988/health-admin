@@ -22,7 +22,7 @@ class Ctrl{
 	 */
 	routes() {
 		this.app.get('/api/card', this.getAll.bind(this))
-		this.app.get('/api/card/:id', this.get.bind(this))
+		// this.app.get('/api/card/:id', this.get.bind(this))
 		this.app.post('/api/card', this.post.bind(this))
 		this.app.put('/api/card/:id', this.put.bind(this))
 		this.app.delete('/api/card/:id', this.delete.bind(this))
@@ -160,7 +160,7 @@ class Ctrl{
 		}
 
 		const options = {
-			path    : 'goods', 
+			path    : 'cards', 
 			select  : {}, 
 		}
 
