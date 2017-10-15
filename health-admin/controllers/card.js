@@ -85,6 +85,7 @@ class Ctrl{
 	getAll(req, res, next) {
 		let query = {}
 
+		console.trace(req.query)
 		if(Object.keys(req.query).length > 0){
 			for(let key in req.query){
 				query[key] = req.query[key]
@@ -218,6 +219,7 @@ class Ctrl{
 			institutionNum  : req.body.institutionNum,
 			feature  : req.body.feature,
 			project  : req.body.project,
+			images  : req.body.images,
 			institutions  : req.body.institutions,  
 		}
 
@@ -321,6 +323,7 @@ class Ctrl{
 			institutionNum  : req.body.institutionNum,
 			feature  : req.body.feature,
 			project  : req.body.project,
+			images  : req.body.images,
 			institutions  : req.body.institutions,  
 		}
 
@@ -339,6 +342,7 @@ class Ctrl{
 			doc.institutionNum = body.institutionNum,
 			doc.feature = body.feature,
 			doc.project = body.project,
+			doc.images = body.images,
 			doc.institutions = body.institutions;
 			return doc.save()
 		})

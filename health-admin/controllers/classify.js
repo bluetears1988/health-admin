@@ -22,7 +22,7 @@ class Ctrl{
 	 */
 	routes() {
 		this.app.get('/api/classify', this.getAll.bind(this))
-		this.app.get('/api/classify/:id', this.get.bind(this))
+		// this.app.get('/api/classify/:id', this.get.bind(this))
 		this.app.post('/api/classify', this.post.bind(this))
 		this.app.put('/api/classify/:id', this.put.bind(this))
 		this.app.delete('/api/classify/:id', this.delete.bind(this))
@@ -109,7 +109,7 @@ class Ctrl{
 		}
 
 		const options = {
-			path    : 'classify', 
+			path    : 'classifies', 
 			select  : {}, 
 		}
 
@@ -195,6 +195,7 @@ class Ctrl{
 			name  : req.body.name,
 			pkgNum: req.body.pkgNum, 
 			city: req.body.city, 
+			pkgs: req.body.pkgs
 		}
 
 		this.model.post(body)
@@ -243,11 +244,16 @@ class Ctrl{
 			name  : req.body.name,
 			pkgNum: req.body.pkgNum, 
 			city: req.body.city, 
+			pkgs: req.body.pkgs
 		}
 
 		this.model.put(query, body)
 		.then(doc => {
 			if (!doc) return res.tools.setJson(1, '资源不存在或已删除')
+			doc.name = body.name,
+			doc.city = body.city, 
+			doc.pkgNum = body.pkgNum,
+			doc.pkgs = body.pkgs;
 			return res.tools.setJson(0, '更新成功', doc)
 		})
 		.catch(err => next(err))

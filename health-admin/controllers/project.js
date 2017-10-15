@@ -25,7 +25,7 @@ class Ctrl{
 		// this.app.get('/api/card/:id', this.get.bind(this))
 		this.app.post('/api/project', this.post.bind(this))
 		this.app.put('/api/project/:id', this.put.bind(this))
-		this.app.delete('/api/card/:id', this.delete.bind(this))
+		this.app.delete('/api/project/:id', this.delete.bind(this))
 		// this.app.post('/api/cart/clear', this.clear.bind(this))
 	}
 
@@ -83,7 +83,14 @@ class Ctrl{
 	 *     }
 	 */
 	getAll(req, res, next) {
-		const query = {}
+		// const query = {}
+		let query = {}
+
+		if(Object.keys(req.query).length > 0){
+			for(let key in req.query){
+				query[key] = req.query[key]
+			}
+		}
 
 		const params = {
 			query  : query, 
@@ -291,19 +298,21 @@ class Ctrl{
 	 */
 	put(req, res, next) {
 		const query = {
-			_id : req.params.id, 
-			user: req.user._id, 
+			_id : req.params.id,  
 		}
 
 		const body = {
-			total: req.body.total, 
+			name  : req.body.name, 
+			content  : req.body.content, 
+			aim  : req.body.aim,
 		}
 
 		this.model.findOneAsync(query)
 		.then(doc => {
 			if (!doc) return res.tools.setJson(1, '资源不存在或已删除')
-			doc.total = Math.abs(body.total)
-			doc.totalAmount = Math.abs(doc.amount * doc.total)
+			doc.name = body.name, 
+			doc.content = body.content,
+			doc.aim = body.aim;
 			return doc.save()
 		})
 		.then(doc => res.tools.setJson(0, '更新成功', doc))

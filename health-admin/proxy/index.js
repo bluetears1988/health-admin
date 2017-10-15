@@ -1,6 +1,6 @@
 import RestBase from './RestBase'
 import banner from '../models/banner'
-import classify from '../models/classify'
+import classify from '../models/12/classify'
 import goods from '../models/goods'
 import cart from '../models/cart'
 import address from '../models/address'

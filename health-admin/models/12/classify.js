@@ -8,13 +8,13 @@ const Schema = mongoose.Schema({
 	city: String,
 	// grade: Number,
 	pkgNum: Number,
-	pkgs:[[{
-		type: ObjectId, 
-		ref : 'institution',
-	},{
-		type: ObjectId, 
-		ref : 'card',
-	}]],
+	pkgs:[{
+		orgName: String,
+		cardName: String,
+		price: String,
+		real_price: String,
+		sales:Number
+	}],
 	// card: [{
 	// 	type: ObjectId, 
 	// 	ref : 'card',

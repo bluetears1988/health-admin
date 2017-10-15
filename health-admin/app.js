@@ -33,17 +33,6 @@ const store        = new SessionStore({ url: mongodb.dblink })
 mkdirsSync(config.upload.tmp)
 mkdirsSync(config.upload.path)
 
-var accessKey = 'OGP8PkJuWP4tLEKTuhKIJqv9VjOqVVjaH8WfHUnv';
-var secretKey = 'fO5CQKrwYSf5Peeet-OcAlR0NwlT6GxQEVcWHw00';
-var mac = new qn.auth.digest.Mac(accessKey, secretKey);
-var options = {
-  scope: afamilyhealth2018,
-  expires: 360000000
-};
-var putPolicy = new qiniu.rs.PutPolicy(options);
-var uploadToken=putPolicy.uploadToken(mac);
-console.dirxml(uploadToken);
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views') )
 app.set('view engine', 'hbs')

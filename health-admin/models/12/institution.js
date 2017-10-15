@@ -25,11 +25,11 @@ const Schema = mongoose.Schema({
 	introduce:String,
 	pkgnum:Number,
 	cards: [{
-		id: Number,
 		name: String,
 		img: String,
 		price: String,
 		real_price: String,
+		sales:Number
 	}],
 	msgnum:Number,
 	msgs: [{

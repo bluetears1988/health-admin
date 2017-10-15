@@ -83,7 +83,14 @@ class Ctrl{
 	 *     }
 	 */
 	getAll(req, res, next) {
-		const query = {}
+		// const query = {}
+		let query = {}
+
+		if(Object.keys(req.query).length > 0){
+			for(let key in req.query){
+				query[key] = req.query[key]
+			}
+		}
 
 		const params = {
 			query  : query, 
@@ -290,19 +297,19 @@ class Ctrl{
 	 */
 	put(req, res, next) {
 		const query = {
-			_id : req.params.id, 
-			user: req.user._id, 
+			_id : req.params.id,  
 		}
 
 		const body = {
-			total: req.body.total, 
+			name  : req.body.name, 
+			details  : req.body.details,
 		}
 
 		this.model.findOneAsync(query)
 		.then(doc => {
 			if (!doc) return res.tools.setJson(1, '资源不存在或已删除')
-			doc.total = Math.abs(body.total)
-			doc.totalAmount = Math.abs(doc.amount * doc.total)
+			doc.name = body.name,
+			doc.details = body.details;
 			return doc.save()
 		})
 		.then(doc => res.tools.setJson(0, '更新成功', doc))

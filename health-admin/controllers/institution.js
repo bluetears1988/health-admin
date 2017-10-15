@@ -217,6 +217,8 @@ class Ctrl{
 			telephone  : req.body.telephone,
 			bprice  : req.body.bprice,
 			city  : req.body.city,
+			img: req.body.img,
+			cards: req.body.cards
 		}
 
 		this.model.post(body)
@@ -316,6 +318,8 @@ class Ctrl{
 			telephone  : req.body.telephone,
 			bprice  : req.body.bprice,
 			city  : req.body.city,
+			img: req.body.img,
+			cards: req.body.cards
 		}
 
 		this.model.findOneAsync(query)
@@ -329,7 +333,9 @@ class Ctrl{
 			doc.address = body.address,
 			doc.telephone = body.telephone,
 			doc.bprice = body.bprice,
-			doc.city = body.city;
+			doc.city = body.city,
+			doc.img = body.img,
+			doc.cards = body.cards;
 			return doc.save()
 		})
 		.then(doc => res.tools.setJson(0, '更新成功', doc))
