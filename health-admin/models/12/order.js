@@ -2,37 +2,51 @@ import mongoose from 'mongoose'
 
 const ObjectId = mongoose.Schema.Types.ObjectId
 
+const medicalMenSchema = mongoose.Schema({
+		name:String,
+		idcard:String,
+		phone:String,
+		checkDate:String
+	});
+
 const Schema = mongoose.Schema({
-	userid: Number,
-	cardid: Number,
-	cardtype:Number,
-	orderid: Number,
-	nm: String,
-	organid:Number,
-	organaddress:String,
-	reserver_tele:Number,
-	authorize:{
+	user: String,
+	status:Number,
+	city:String,
+	card:String,
+	num: Number,
+	ctype:String,
+	oneprice:String,
+	totalprice:String,
+	org:{name:String,address:String,phone:String},
+	reportMethod:Number,
+	payMethod:Number,
+	remarks:String,
+	bookPhone:String,
+	bookDate:String,
+	medicalMen:Array,
+	authorized:{
 		type:Boolean,
 		default:true
 	},
-	reportCollectMode:Number,
-	o_nm: String,
-	type: Number,
-	zprice: String,
-	cardnum: Number,
 	img: String,
-	totalprice:String,
-	status:Number,
-	count: Number,
-	orderdate:String,
-	medicalMen:[{
-		nm:String,
-		idcard:Number,
-		telephone:Number,
-		sexy:Number,
-		date:String,
-	}]
+
+	// userid: Number,
+	// cardid: Number,
+	// cardtype:Number,
+	// orderid: Number,
+	// nm: String,
+	// organid:Number,
+	// organaddress:String,
+	// reserver_tele:Number,
 	
+	// reportCollectMode:Number,
+	// o_nm: String,
+	// type: Number,
+	// zprice: String,
+	// cardnum: Number,
+	// img: String,
+	// totalprice:String,
 })
 
 export default mongoose.model('order', Schema)

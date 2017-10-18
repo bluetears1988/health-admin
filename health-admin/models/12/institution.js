@@ -16,12 +16,14 @@ const Schema = mongoose.Schema({
 	telephone:String,
 	bprice:String,
 	img:String,
-	score: String,
-	location:{
-		Longitude:String,
-		Latitude:String,
-	},
+	score: {type:String,default:'5.0'},
+	// location:{
+	// 	Longitude:{type:Double,default:0},
+	// 	Latitude:{type:Double,default:0},
+	// },
 	// distance: String,
+	// location:{type:String,default:'0.0,0.0'},
+	location:{type:[Number],index: '2d'},
 	introduce:String,
 	pkgnum:Number,
 	cards: [{

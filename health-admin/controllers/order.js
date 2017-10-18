@@ -22,7 +22,7 @@ class Ctrl{
 	 */
 	routes() {
 		this.app.get('/api/order', this.getAll.bind(this))
-		this.app.get('/api/order/:id', this.get.bind(this))
+		// this.app.get('/api/order/:id', this.get.bind(this))
 		this.app.post('/api/order', this.post.bind(this))
 		this.app.put('/api/order/:id', this.put.bind(this))
 		this.app.delete('/api/order/:id', this.delete.bind(this))
@@ -81,42 +81,70 @@ class Ctrl{
 	 *       }]
 	 *     }
 	 */
-	getAll(req, res, next) {
-		const status = req.query.type
+	// getAll(req, res, next) {
+	// 	const status = req.query.type
 
-		const query = {
-			user  : req.user._id,
-			status: status,
+	// 	const query = {
+	// 		user  : req.user._id,
+	// 		status: status,
+	// 	}
+
+	// 	status === 'all' && delete query.status
+
+	// 	const opts = {
+	// 		page : req.query.page, 
+	// 		limit: req.query.limit, 
+	// 	}
+
+	// 	const params = {
+	// 		query  : query, 
+	// 		fields : {}, 
+	// 		options: opts, 
+	// 	}
+
+	// 	const options = {
+	// 		path    : 'user', 
+	// 		select  : {}, 
+	// 	}
+
+	// 	Promise.all([
+	// 		this.model.countAsync(query), 
+	// 		this.model.findAndPopulateAsync(params, options), 
+	// 	])
+	// 	.then(docs => {
+	// 		res.tools.setJson(0, '调用成功', {
+	// 			items   : docs[1], 
+	// 			paginate: res.paginate(Number(opts.page), Number(opts.limit), docs[0]), 
+	// 		})
+	// 	})
+	// 	.catch(err => next(err))
+	// }
+	getAll(req, res, next) {
+		let query = {}
+
+		const status = req.query.status
+
+		if(Object.keys(req.query).length > 0){
+			for(let key in req.query){
+				query[key] = req.query[key]
+			}
 		}
 
 		status === 'all' && delete query.status
-
-		const opts = {
-			page : req.query.page, 
-			limit: req.query.limit, 
-		}
-
+		
 		const params = {
 			query  : query, 
 			fields : {}, 
-			options: opts, 
+			options: {}, 
 		}
 
 		const options = {
-			path    : 'user', 
+			path    : 'orders', 
 			select  : {}, 
 		}
 
-		Promise.all([
-			this.model.countAsync(query), 
-			this.model.findAndPopulateAsync(params, options), 
-		])
-		.then(docs => {
-			res.tools.setJson(0, '调用成功', {
-				items   : docs[1], 
-				paginate: res.paginate(Number(opts.page), Number(opts.limit), docs[0]), 
-			})
-		})
+		this.model.findAndPopulateAsync(params, options)
+		.then(docs => res.tools.setJson(0, '调用成功', docs))
 		.catch(err => next(err))
 	}
 	
@@ -158,30 +186,30 @@ class Ctrl{
 	 *       }
 	 *     }
 	 */
-	get(req, res, next) {
-		const query = {
-			_id : req.params.id, 
-			user: req.user._id, 
-		}
+	// get(req, res, next) {
+	// 	const query = {
+	// 		_id : req.params.id, 
+	// 		user: req.user._id, 
+	// 	}
 
-		const params = {
-			query  : query, 
-			fields : {}, 
-			options: {}, 
-		}
+	// 	const params = {
+	// 		query  : query, 
+	// 		fields : {}, 
+	// 		options: {}, 
+	// 	}
 
-		const options = {
-			path    : 'user', 
-			select  : {}, 
-		}
+	// 	const options = {
+	// 		path    : 'user', 
+	// 		select  : {}, 
+	// 	}
 
-		this.model.findOneAndPopulateAsync(params, options)
-		.then(doc => {
-			if (!doc) return res.tools.setJson(1, '资源不存在或已删除')
-			return res.tools.setJson(0, '调用成功', doc)
-		})
-		.catch(err => next(err))
-	}
+	// 	this.model.findOneAndPopulateAsync(params, options)
+	// 	.then(doc => {
+	// 		if (!doc) return res.tools.setJson(1, '资源不存在或已删除')
+	// 		return res.tools.setJson(0, '调用成功', doc)
+	// 	})
+	// 	.catch(err => next(err))
+	// }
 
 	/**
 	 * @api {post} /order 新建一个资源
@@ -215,64 +243,27 @@ class Ctrl{
 	 */
 	post(req, res, next) {
 		const body = {
-			items      : [], 
-			totalAmount: 0, 
-			address_id : req.body.address_id, 
-			user       : req.user._id, 
+			user  : req.body.user,
+			card  : req.body.card, 
+			status  : req.body.status, 
+			city  : req.body.city,
+			num  : req.body.num, 
+			payMethod  : req.body.payMethod,
+			reportMethod  : req.body.reportMethod, 
+			ctype  : req.body.ctype,
+			oneprice  : req.body.oneprice, 
+			totalprice  : req.body.totalprice,
+			org  : req.body.org,
+			remarks  : req.body.remarks,
+			bookPhone  : req.body.bookPhone,
+			bookDate  : req.body.bookDate,
+			medicalMen  : req.body.medicalMen,
+			authorized  : req.body.authorized,
+			img  : req.body.img
 		}
 
-		const query = {
-			_id: {
-				$in: req.body.items.map(n => n.id),
-			},
-		}
-
-		const params = {
-			query  : query, 
-			fields : {}, 
-			options: {}, 
-		}
-
-		const options = {
-			path    : 'types', 
-			select  : {}, 
-		}
-
-		proxy.address.findByIdAsync(body.address_id)
-		.then(doc => {
-			if (!doc) return res.tools.setJson(1, '地址不存在或已删除')
-			body.recipientName = doc.name
-			body.recipientGender = doc.gender
-			body.recipientTel = doc.tel
-			body.recipientAddress = doc.address
-			return proxy.goods.findAndPopulateAsync(params, options)
-		})
-		.then(doc => {
-			doc.forEach(n => {
-				const items = {
-					goods: n,
-					meta : {},
-				}
-				req.body.items.forEach(m => {
-					if (n._id.toString() === m.id.toString()) {
-						items.meta.total = Math.abs(m.total)
-						items.meta.totalAmount = Math.abs(n.price * m.total)
-						body.totalAmount += items.meta.totalAmount
-					}
-				})
-				body.items.push(items)
-			})
-			return this.model.post(body)
-		})
-		.then(doc => {
-			proxy.cart.removeAsync({
-				user: req.user._id,
-				goods: {
-					$in: req.body.items.map(n => n.id),
-				},
-			})
-			res.tools.setJson(0, '新增成功', {_id: doc._id})
-		})
+		this.model.post(body)
+		.then(doc => res.tools.setJson(0, '新增成功', {_id: doc._id}))
 		.catch(err => next(err))
 	}
 
@@ -322,22 +313,39 @@ class Ctrl{
 	put(req, res, next) {
 		const query = {
 			_id : req.params.id, 
-			user: req.user._id, 
+			// user: req.user._id, 
 		}
 
 		const body = {
-			title    : req.body.title,
-			remark   : req.body.remark,
-			sort     : req.body.sort || 99,
-			is_show  : req.body.is_show,
-			images   : req.body.images,
+			// user  : req.body.user,
+			// card  : req.body.card, 
+			// status  : req.body.status, 
+			// city  : req.body.city,
+			// num  : parseInt(req.body.num), 
+			payMethod  : parseInt(req.body.payMethod),
+			reportMethod  : parseInt(req.body.reportMethod), 
+			// ctype  : req.body.ctype,
+			// oneprice  : req.body.oneprice, 
+			// totalprice  : req.body.totalprice,
+			// org  : req.body.org,
+			remarks  : req.body.remarks,
+			// bookPhone  : req.body.bookPhone,
+			// bookDate  : req.body.bookDate,
+			medicalMen  : req.body.medicalMen,
+			// authorized  : parseInt(req.body.authorized[0]),
+			// img  : req.body.img
 		}
 
-		this.model.put(query, body)
+		this.model.findOneAsync(query)
 		.then(doc => {
 			if (!doc) return res.tools.setJson(1, '资源不存在或已删除')
-			return res.tools.setJson(0, '更新成功', doc)
+			doc.payMethod = body.payMethod,
+			doc.reportMethod = body.reportMethod, 
+			doc.remarks = body.remarks,
+			doc.medicalMen = body.medicalMen;
+			return doc.save()
 		})
+		.then(doc => res.tools.setJson(0, '更新成功', doc))
 		.catch(err => next(err))
 	}
 
@@ -368,7 +376,7 @@ class Ctrl{
 	delete(req, res, next) {
 		const query = {
 			_id : req.params.id, 
-			user: req.user._id, 
+			// user: req.user._id, 
 		}
 		
 		this.model.delete(query)

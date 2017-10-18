@@ -122,6 +122,28 @@ class FeatureBase{
 		.exec()
 	}
 
+	sortBygeoNear(params = {}, options = {}, res){
+		params.options = params.options || {}
+		const page  = Number(params.options.page) || 1
+		const limit = Number(params.options.limit) || 10
+		const skip  = (page - 1) * limit
+		const sort  = params.options.sort || {create_at: -1}
+
+		var lat = parseFloat(params.query['location']['$near'][0]);
+		var lon = parseFloat(params.query['location']['$near'][1]);
+		var points = [];
+		points.push(lat);
+		points.push(lon);
+
+		this.model.geoNear(points, {distanceMultiplier: 111},function(err, docs) {
+			if(err){
+				console.error(err);
+			}else{
+				console.trace('docs:',docs);
+				res.tools.setJson(0, '调用成功', docs);
+			}	
+		});
+	}
 	/**
 	 * 关联查询某个指定资源
 	 * @param  {Object} params  

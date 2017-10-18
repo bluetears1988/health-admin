@@ -84,11 +84,16 @@ class Ctrl{
 	 */
 	getAll(req, res, next) {
 		let query = {}
+		let sort = {}
 
-		console.trace(req.query)
+		// console.trace(req.query)
 		if(Object.keys(req.query).length > 0){
 			for(let key in req.query){
-				query[key] = req.query[key]
+				if(key.indexOf("sort") !== -1){
+					sort[key.split('.')[1]] = req.query[key]
+				}else{
+					query[key] = req.query[key]
+				}
 			}
 		}
 		// const query = {
@@ -97,8 +102,9 @@ class Ctrl{
 		const params = {
 			query  : query, 
 			fields : {}, 
-			options: {}, 
+			options: {'sort':sort} 
 		}
+		// console.trace("params", params);
 
 		const options = {
 			path    : 'cards', 

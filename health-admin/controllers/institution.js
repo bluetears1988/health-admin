@@ -88,17 +88,31 @@ class Ctrl{
 		// }
 
 		let query = {}
+		let sort = {}
+		let location = false;
 
 		if(Object.keys(req.query).length > 0){
 			for(let key in req.query){
-				query[key] = req.query[key]
+				if(key.indexOf("location") !== -1){
+					location = true;
+					query[key] = {$near:req.query[key].split(',')};
+					// this.model.geoNear(req.query[key].split(','), function(err,results, stats) {
+     // 					console.trace(results)});
+					// sort[key] = 1;
+				}else{
+					if(key.indexOf("sort") !== -1){
+						sort[key.split('.')[1]] = req.query[key]
+					}else{
+						query[key] = req.query[key]
+					}
+				}
 			}
 		}
 
 		const params = {
 			query  : query, 
 			fields : {}, 
-			options: {}, 
+			options: {'sort':sort}  
 		}
 
 		const options = {
@@ -106,9 +120,30 @@ class Ctrl{
 			select  : {}, 
 		}
 
-		this.model.findAndPopulateAsync(params, options)
-		.then(docs => res.tools.setJson(0, '调用成功', docs))
-		.catch(err => next(err))
+		if(location){
+			this.model.sortBygeoNear(params, options, res);
+			// res.tools.setJson(0, '调用成功', docs);
+			// let lat = parseFloat(params.query['location']['$near'][0]);
+			// let lon = parseFloat(params.query['location']['$near'][1]);
+			// let points = [];
+			// points.push(lat);
+			// points.push(lon);
+
+			// this.model.geoNear(points, {distanceMultiplier: 111},function(err, docs) {
+			// 	if(err){
+			// 		console.error(err);
+			// 	}else{
+			// 		console.trace('docs:',docs);
+			// 		res.tools.setJson(0, '调用成功', docs)
+			// 	}	
+			// });
+		}else{
+			this.model.findAndPopulateAsync(params, options)
+			.then(docs => res.tools.setJson(0, '调用成功', docs))
+			.catch(err => next(err))
+		}
+
+		
 	}
 	
 	/**
@@ -218,6 +253,7 @@ class Ctrl{
 			bprice  : req.body.bprice,
 			city  : req.body.city,
 			img: req.body.img,
+			location: req.body.location.split(','),
 			cards: req.body.cards
 		}
 
@@ -319,6 +355,7 @@ class Ctrl{
 			bprice  : req.body.bprice,
 			city  : req.body.city,
 			img: req.body.img,
+			location: req.body.location.split(','),
 			cards: req.body.cards
 		}
 
@@ -335,7 +372,8 @@ class Ctrl{
 			doc.bprice = body.bprice,
 			doc.city = body.city,
 			doc.img = body.img,
-			doc.cards = body.cards;
+			doc.img = body.img,
+			doc.location = body.location;
 			return doc.save()
 		})
 		.then(doc => res.tools.setJson(0, '更新成功', doc))

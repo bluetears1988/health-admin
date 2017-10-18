@@ -42,9 +42,9 @@ const Schema = mongoose.Schema({
 	// }],
 	institutions:Array,
 	images: Array,
-	sales: Number,
+	sales: {type:Number,default:0},
 	count: Number,
-	collectNum: Number,
+	collectNum: {type:Number,default:0},
 	// related_cities:[{
 	// 	name:String,
 	// 	code:String,
