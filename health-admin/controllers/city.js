@@ -210,6 +210,7 @@ class Ctrl{
 			grade  : req.body.grade, 
 			code  : req.body.code, 
 			pcode  : req.body.pcode, 
+			location: req.body.location.split(','),
 		}
 
 		this.model.post(body)
@@ -306,6 +307,7 @@ class Ctrl{
 			code  : req.body.code, 
 			grade  : req.body.grade,
 			pcode  : req.body.pcode, 
+			location: req.body.location.split(','),
 		}
 
 		this.model.findOneAsync(query)
@@ -314,6 +316,7 @@ class Ctrl{
 			doc.name = body.name,
 			doc.code = body.code, 
 			doc.grade = body.grade,
+			doc.location = body.location,
 			doc.pcode = body.pcode;
 			return doc.save()
 		})

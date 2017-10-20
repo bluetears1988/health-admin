@@ -10,6 +10,7 @@ const Schema = mongoose.Schema({
 	price: String,
 	gender: Number,
 	people: String,
+	introduce:String,
 	// feature: [{
 	// 	name:String,
 	// 	img:String

@@ -225,6 +225,7 @@ class Ctrl{
 			institutionNum  : req.body.institutionNum,
 			feature  : req.body.feature,
 			project  : req.body.project,
+			introduce  : req.body.introduce,
 			images  : req.body.images,
 			institutions  : req.body.institutions,  
 		}
@@ -330,6 +331,7 @@ class Ctrl{
 			feature  : req.body.feature,
 			project  : req.body.project,
 			images  : req.body.images,
+			introduce  : req.body.introduce,
 			institutions  : req.body.institutions,  
 		}
 
@@ -348,6 +350,7 @@ class Ctrl{
 			doc.institutionNum = body.institutionNum,
 			doc.feature = body.feature,
 			doc.project = body.project,
+			doc.introduce = body.introduce,
 			doc.images = body.images,
 			doc.institutions = body.institutions;
 			return doc.save()

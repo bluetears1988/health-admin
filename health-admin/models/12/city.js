@@ -8,10 +8,11 @@ const Schema = mongoose.Schema({
 	grade: Number,
 	code: String,
 	pcode: String,
-	location:{
-		Longitude:String,
-		Latitude:String,
-	},
+	location:{type:[Number],index: '2d'},
+	// location:{
+	// 	Longitude:String,
+	// 	Latitude:String,
+	// },
 	// card: [{
 	// 	type: ObjectId, 
 	// 	ref : 'card',

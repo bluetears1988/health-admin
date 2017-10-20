@@ -38,6 +38,7 @@ const Schema = mongoose.Schema({
 		type: ObjectId, 
 		ref : 'comment',
 	}],
+	num:{type:Number,default:0}
 	// msgs:[{
 	// 	account: String, 
 	// 	score:String,

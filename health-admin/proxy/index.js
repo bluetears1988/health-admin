@@ -14,8 +14,12 @@ import city from '../models/12/city'
 import project from '../models/12/project'
 import feature from '../models/12/feature'
 import institution from '../models/12/institution'
+import member from '../models/12/member'
+import report from '../models/12/report'
 
 export default {
+	report  : new RestBase(report),
+	member  : new RestBase(member), 
 	card    : new RestBase(card), 
 	city    : new RestBase(city), 
 	project : new RestBase(project), 
